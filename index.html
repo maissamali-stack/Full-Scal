@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Free Store</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; text-align: center; }
+        .product-card { background: white; padding: 20px; border-radius: 8px; max-width: 300px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .btn { background: #25D366; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 15px; }
+        input { width: 80%; padding: 8px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <h2>Welcome to My Store</h2>
+
+    <!-- Product Section -->
+    <div class="product-card">
+        <h3 id="prod-name">Electronic Inverter (KT13C)</h3>
+        <p>Price: <span id="prod-price">\$50</span></p>
+        
+        <!-- Checkout Fields -->
+        <input type="text" id="cust-name" placeholder="Your Name" required>
+        <input type="text" id="cust-phone" placeholder="Phone Number (e.g. 09xxxxxxxx)" required>
+        <input type="text" id="cust-city" placeholder="City / Governorate" required>
+
+        <!-- Order Button -->
+        <button class="btn" onclick="sendOrder()">Order via WhatsApp</button>
+    </div>
+
+    <script>
+        function sendOrder() {
+            // 1. Get the values entered by the user
+            const productName = document.getElementById('prod-name').innerText;
+            const productPrice = document.getElementById('prod-price').innerText;
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const city = document.getElementById('cust-city').value;
+
+            if(!name || !phone || !city) {
+                alert("Please fill out all fields before ordering.");
+                return;
+            }
+
+            // 2. Format the text invoice neatly
+            const invoiceText = `🛒 *NEW ORDER* \n\n` +
+                                `📦 *Product:* ${productName}\n` +
+                                `💰 *Price:* ${productPrice}\n\n` +
+                                `👤 *Customer:* ${name}\n` +
+                                `📞 *Phone:* ${phone}\n` +
+                                `📍 *Location:* ${city}`;
+
+            // 3. Encode text for URL usage
+            const encodedText = encodeURIComponent(invoiceText);
+
+            // 4. Replace with your actual WhatsApp phone number (with country code)
+            const myWhatsAppNumber = "0963955595952"; 
+
+            // 5. Redirect the user to WhatsApp with the automated message
+            window.location.href = `https://wa.me{myWhatsAppNumber}?text=${encodedText}`;
+        }
+    </script>
+</body>
+</html>
